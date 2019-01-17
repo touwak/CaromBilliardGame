@@ -2,20 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerBehaviour : MonoBehaviour {
 
     #region Variables
+    Camera camera;
+    Rigidbody rigidbody;
 
-
+    float strength = 100.0f;
     #endregion
 
-	// Use this for initialization
 	void Start () {
-
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        rigidbody = GetComponent<Rigidbody>();
 	}
 
-    // Update is called once per frame
     void Update() {
-     
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            HitBall();
+        }
+    }
+
+    void HitBall() {
+        Vector3 direction = camera.transform.forward;
+        direction.y = 0.0f;
+        rigidbody.AddForce(direction * strength);
     }
 }
