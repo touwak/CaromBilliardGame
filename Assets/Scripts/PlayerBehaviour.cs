@@ -43,7 +43,7 @@ public class PlayerBehaviour : MonoBehaviour {
     void HitBall() {
         Vector3 direction = camera.transform.forward;
         direction.y = 0.0f;
-        rigidbody.AddForce(direction * finalStrength);
+        rigidbody.AddForce(direction * finalStrength, ForceMode.Impulse);
 
         // reset strength
         finalStrength = minStrength;
