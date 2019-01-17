@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54467989221716272}
   m_Layer: 0
   m_Name: P_YellowBall
-  m_TagString: Untagged
+  m_TagString: YellowBall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,9 +92,9 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1724895365883810}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 50
+  m_Drag: 0.6
+  m_AngularDrag: 0.6
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0

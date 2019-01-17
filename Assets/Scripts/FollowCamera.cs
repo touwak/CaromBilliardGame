@@ -5,7 +5,6 @@ using UnityEngine;
 public class FollowCamera : MonoBehaviour {
 
     #region Variables
-    [Header("Camera")]
     [Range(0.0f, 10.0f)]
     public float camRotationSpeed = 5.0f;
     [Range(0.0f, 10.0f)]
