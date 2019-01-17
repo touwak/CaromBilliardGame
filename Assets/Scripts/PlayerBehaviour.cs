@@ -42,7 +42,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
     void Update() {
 
-        IsMoving();
+        DetectMovement();
 
         if (Input.GetButton("HitBall") && !isMoving) {
             IncrementHitForce();
@@ -52,10 +52,14 @@ public class PlayerBehaviour : MonoBehaviour {
         }
     }
 
+    public bool IsMoving {
+        get{ return isMoving; }
+    }
+
     /// <summary>
     ///  Check if the ball is moving
     /// </summary>
-    void IsMoving() {
+    void DetectMovement() {
         if(rigidbody.velocity != Vector3.zero) {
             isMoving = true;
         }
