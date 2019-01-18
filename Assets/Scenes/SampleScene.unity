@@ -388,6 +388,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 120042297381008342, guid: 4cdc1696814f9344eb9089275e95d6f2,
+        type: 2}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 120042297381008342, guid: 4cdc1696814f9344eb9089275e95d6f2,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 120042297381008342, guid: 4cdc1696814f9344eb9089275e95d6f2,
+        type: 2}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cdc1696814f9344eb9089275e95d6f2, type: 2}
   m_IsPrefabAsset: 0
