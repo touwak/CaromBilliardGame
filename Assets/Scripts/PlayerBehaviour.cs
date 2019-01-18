@@ -97,7 +97,8 @@ public class PlayerBehaviour : MonoBehaviour {
         // reset strength
         finalStrength = minStrength;
 
-        IsMoving = true;
+        // Increment num shoots for the UI
+        GameManager.instance.NumShoots++;
     }
 
     /// <summary>
@@ -128,6 +129,8 @@ public class PlayerBehaviour : MonoBehaviour {
             redBallTouched = false;
             yellowBallTouched = false;
 
+            // Increment the points gained for the UI and Game Over
+            GameManager.instance.PointsGained++;
             Debug.Log("1 point!");
         }
     }
