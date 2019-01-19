@@ -99,6 +99,8 @@ public class PlayerBehaviour : MonoBehaviour {
 
         // Increment num shoots for the UI
         GameManager.instance.NumShoots++;
+        // Restart the force slider
+        GameManager.instance.ForceApplied = 0f;
     }
 
     /// <summary>
@@ -107,9 +109,12 @@ public class PlayerBehaviour : MonoBehaviour {
     void IncrementHitForce() {
         if(finalStrength < maxStrength) {
             finalStrength += acceleration * Time.deltaTime;
+
+            // For the UI
+            float finalStrengthNormalize = finalStrength / maxStrength;
+            GameManager.instance.ForceApplied = finalStrengthNormalize; 
         }
 
-        //Debug.Log("acceleration: " + finalStrength);
     }
     #endregion
 
@@ -131,7 +136,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
             // Increment the points gained for the UI and Game Over
             GameManager.instance.PointsGained++;
-            Debug.Log("1 point!");
         }
     }
 
