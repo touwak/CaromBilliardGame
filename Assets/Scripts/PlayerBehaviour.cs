@@ -20,6 +20,7 @@ public class PlayerBehaviour : MonoBehaviour {
     float accelerationTime = 3.0f;
     float acceleration;
     float finalStrength;
+    float finalStrengthNormalize;
 
     bool redBallTouched;
     bool yellowBallTouched;
@@ -28,6 +29,8 @@ public class PlayerBehaviour : MonoBehaviour {
     int rayCastingSections = 2;
     List<Vector3> rayCastingPoints;
     LineRenderer lineRenderer;
+
+    AudioSource hitSound;
     #endregion
 
     void Start () {
@@ -45,6 +48,8 @@ public class PlayerBehaviour : MonoBehaviour {
         rayCastingPoints = new List<Vector3>();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = rayCastingSections;
+
+        hitSound = GetComponent<AudioSource>();
 	}
 
     void Update() {
@@ -63,6 +68,8 @@ public class PlayerBehaviour : MonoBehaviour {
         if (!IsMoving) {
             BallDirection();
         }
+
+        Debug.Log("Replay: " + GameManager.instance.isReplaying);
     }
 
     #region Movement Detection
@@ -79,6 +86,8 @@ public class PlayerBehaviour : MonoBehaviour {
             IsMoving = false;
             redBallTouched = false;
             yellowBallTouched = false;
+
+            GameManager.instance.isReplaying = false;
         }
 
         //Debug.Log("isMoving: " + isMoving);
@@ -90,9 +99,15 @@ public class PlayerBehaviour : MonoBehaviour {
     /// Hit the ball in the forward direction of the camera
     /// </summary>
     void HitBall() {
+        
         Vector3 direction = camera.transform.forward;
         direction.y = 0.0f;
-        rigidbody.AddForce(direction * finalStrength, ForceMode.Impulse);
+        Vector3 force = direction * finalStrength;
+        
+        // Save the data of the balls for the replay
+        GameManager.instance.ReplayData(force);
+
+        rigidbody.AddForce(force, ForceMode.Impulse);
 
         // reset strength
         finalStrength = minStrength;
@@ -101,6 +116,8 @@ public class PlayerBehaviour : MonoBehaviour {
         GameManager.instance.NumShoots++;
         // Restart the force slider
         GameManager.instance.ForceApplied = 0f;
+
+
     }
 
     /// <summary>
@@ -111,7 +128,7 @@ public class PlayerBehaviour : MonoBehaviour {
             finalStrength += acceleration * Time.deltaTime;
 
             // For the UI
-            float finalStrengthNormalize = finalStrength / maxStrength;
+            finalStrengthNormalize = finalStrength / maxStrength;
             GameManager.instance.ForceApplied = finalStrengthNormalize; 
         }
 
@@ -120,25 +137,35 @@ public class PlayerBehaviour : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision) {
 
-        // Red ball
-        if(collision.collider.CompareTag("RedBall") && IsMoving && !redBallTouched) {
-            redBallTouched = true;
-        }
+        // Sound
+        PlayHitSound();
 
-        // Yellow ball
-        if (collision.collider.CompareTag("YellowBall") && IsMoving && !yellowBallTouched) {
-            yellowBallTouched = true;
-        }
+        // Check that is not replaying the last movement
+        if (!GameManager.instance.isReplaying) {
+            // Red ball
+            if (collision.collider.CompareTag("RedBall") && IsMoving && !redBallTouched) {
+                redBallTouched = true;
+            }
 
-        if(redBallTouched && yellowBallTouched) {
-            redBallTouched = false;
-            yellowBallTouched = false;
+            // Yellow ball
+            if (collision.collider.CompareTag("YellowBall") && IsMoving && !yellowBallTouched) {
+                yellowBallTouched = true;
+            }
 
-            // Increment the points gained for the UI and Game Over
-            GameManager.instance.PointsGained++;
+            // Score 1 point
+            if (redBallTouched && yellowBallTouched) {
+                redBallTouched = false;
+                yellowBallTouched = false;
+
+                // Increment the points gained for the UI and Game Over
+                GameManager.instance.PointsGained++;
+            }
         }
     }
 
+    /// <summary>
+    /// Draw the trajectory of the ball
+    /// </summary>
     void BallDirection() {
 
         Vector3 direction = camera.transform.forward;
@@ -163,6 +190,17 @@ public class PlayerBehaviour : MonoBehaviour {
 
         rayCastingPoints.Clear();
         
+    }
+
+    /// <summary>
+    /// Adjust the volume and play the hit sound
+    /// </summary>
+    void PlayHitSound() {
+
+        float masterVolume = PlayerPrefs.GetFloat("MasterVolume");
+        float volume = Mathf.Clamp((masterVolume + finalStrengthNormalize), 0f, 1f);
+        hitSound.volume = volume;
+        hitSound.Play();
     }
 
 

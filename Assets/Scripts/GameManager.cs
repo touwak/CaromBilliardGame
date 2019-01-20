@@ -20,14 +20,20 @@ public class GameManager : MonoBehaviour {
     public Text timeText;
     public Slider forceSlider;
 
-    StringBuilder timeString;
-
     // Time counter
-    float startTime;
-    float actualTime;
     int seconds;
     int minutes;
     int hours;
+
+    // Replay
+    public bool isReplaying;
+    public GameObject whiteBall;
+    public GameObject redBall;
+    public GameObject  yellowBall;
+    Vector3 whiteBallPosition;
+    Vector3 whiteBallDirection;
+    Vector3 redBallPosition;
+    Vector3 yellowBallPosition;
     #endregion
 
     private void Awake() {
@@ -39,15 +45,14 @@ public class GameManager : MonoBehaviour {
         }
 
         DontDestroyOnLoad(gameObject);
-
-        // Time counter
-        startTime = Time.time;
     }
 
     private void Start() {
         forceApplied = 0.0f;
         numShoots = 0;
         pointsGained = 0;
+
+        isReplaying = false;
     }
 
     private void Update() {
@@ -59,6 +64,7 @@ public class GameManager : MonoBehaviour {
         get { return forceApplied; }
         set { forceApplied = value;
 
+            // Force UI
             forceSlider.value = forceApplied;
         }
     }
@@ -81,6 +87,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Display the duration of the game
+    /// </summary>
     void TimeCounter() {
         seconds = (int)(Time.time % 60f);
         minutes = (int)(Time.time / 60f);
@@ -94,6 +103,32 @@ public class GameManager : MonoBehaviour {
             );
     }
 
-    
+    #region Replay
+    /// <summary>
+    /// The necessary data for the replay 
+    /// </summary>
+    /// <param name="direction"> The direction and force of the white ball</param>
+    public void ReplayData(Vector3 direction) {
+        whiteBallPosition = whiteBall.transform.position;
+        redBallPosition = redBall.transform.position;
+        yellowBallPosition = yellowBall.transform.position;
+        whiteBallDirection = direction;
+    }
 
+    /// <summary>
+    /// Replay the last movement
+    /// </summary>
+    public void Replay() {
+        if (!isReplaying) {
+            isReplaying = true;
+
+            whiteBall.transform.position = whiteBallPosition;
+            redBall.transform.position = redBallPosition;
+            yellowBall.transform.position = yellowBallPosition;
+
+            whiteBall.GetComponent<Rigidbody>().AddForce(whiteBallDirection, ForceMode.Impulse);
+        }
+    }
+
+    #endregion
 }
