@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RedBall
   - YellowBall
+  - Surface
   layers:
   - Default
   - TransparentFX

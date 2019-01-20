@@ -1,9 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -15,36 +13,54 @@ public class GameManager : MonoBehaviour {
     int pointsGained;
 
     // UI
+    [Header("Gameplay UI")]
     public Text shootsText;
     public Text pointsText;
     public Text timeText;
     public Slider forceSlider;
 
+    [Header("Game Over UI")]
+    public GameObject gameOverPanel;
+    public Text gameOverShootsText;
+    public Text gameOverPointsText;
+    public Text gameOverTimeText;
+
     // Time counter
     int seconds;
     int minutes;
     int hours;
+    float startTime;
+    float actualTime;
 
     // Replay
+    [HideInInspector]
     public bool isReplaying;
+    [Header("Replay")]
     public GameObject whiteBall;
     public GameObject redBall;
-    public GameObject  yellowBall;
+    public GameObject yellowBall;
+
     Vector3 whiteBallPosition;
     Vector3 whiteBallDirection;
     Vector3 redBallPosition;
     Vector3 yellowBallPosition;
+
+    // Game Over
+    bool isOver;
+    [Header("Game Over")]
+    public int victoryThreeshold = 3;
+    string dataPath;
     #endregion
 
     private void Awake() {
-        if(instance == null) {
+        if (instance == null) {
             instance = this;
         }
-        else if(instance != this) {
+        else if (instance != this) {
             Destroy(gameObject);
         }
 
-        DontDestroyOnLoad(gameObject);
+        gameOverPanel.SetActive(false);
     }
 
     private void Start() {
@@ -53,11 +69,18 @@ public class GameManager : MonoBehaviour {
         pointsGained = 0;
 
         isReplaying = false;
+        isOver = false;
+
+        startTime = Time.time;
+
+        dataPath = Path.Combine(Application.persistentDataPath, "PlayerData.txt");
     }
 
     private void Update() {
         // Time counter
-        TimeCounter();
+        if (!isOver) {
+            TimeCounter();
+        }
     }
 
     public float ForceApplied {
@@ -78,27 +101,43 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public int PointsGained{
+    public int PointsGained {
         get { return pointsGained; }
         set { pointsGained = value;
 
             // Points UI
             pointsText.text = string.Concat("Points: " + pointsGained);
+
+            // check if the player has reach all the points
+            if (pointsGained >= victoryThreeshold) {
+                GameOver();
+            }
         }
+    }
+
+    public bool IsOver {
+        get { return isOver; }
+    }
+
+    public string DataPath {
+        get { return dataPath; }
     }
 
     /// <summary>
     /// Display the duration of the game
     /// </summary>
     void TimeCounter() {
-        seconds = (int)(Time.time % 60f);
-        minutes = (int)(Time.time / 60f);
-        hours = (int)(Time.time / 3600f);
+
+        actualTime = Time.time - startTime;
+
+        seconds = (int)(actualTime % 60f);
+        minutes = (int)(actualTime / 60f);
+        hours = (int)(actualTime / 3600f);
 
         // Time counter UI
         timeText.text = string.Concat(
-            hours.ToString("00") + ":" + 
-            minutes.ToString("00") + ":" + 
+            hours.ToString("00") + ":" +
+            minutes.ToString("00") + ":" +
             seconds.ToString("00")
             );
     }
@@ -131,4 +170,51 @@ public class GameManager : MonoBehaviour {
     }
 
     #endregion
+
+    public void LoadLevel(string levelName) {
+        // load the scene
+        SceneManager.LoadScene(levelName);
+    }
+
+    #region Game Over
+
+    void GameOver() {
+        isOver = true;
+        SavePlayerData();
+
+        gameOverShootsText.text = string.Concat("Shoots: " + numShoots);
+        gameOverPointsText.text = string.Concat("Points: " + pointsGained);
+        gameOverTimeText.text = string.Concat(
+            hours.ToString("00") + ":" +
+            minutes.ToString("00") + ":" +
+            seconds.ToString("00")
+            );
+
+        gameOverPanel.SetActive(true);
+    }
+
+
+    void SavePlayerData() {
+        GameData data = new GameData() ;
+        data.shoots = numShoots;
+        data.points = pointsGained;
+        data.time = actualTime;
+
+        string playerData = JsonUtility.ToJson(data);
+
+        using (StreamWriter streamWriter = File.CreateText(dataPath)) {
+            streamWriter.Write(playerData);
+        }
+
+
+    }
+
+    #endregion
+}
+
+[SerializeField]
+class GameData{
+    public int shoots;
+    public int points;
+    public float time;
 }

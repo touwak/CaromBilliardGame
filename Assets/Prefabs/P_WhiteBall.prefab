@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minStrength: 50
-  maxStrength: 2000
+  maxStrength: 1500
   accelerationTime: 2
   rayCastingSections: 4
 --- !u!120 &120042297381008342

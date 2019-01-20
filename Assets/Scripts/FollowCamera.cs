@@ -21,7 +21,9 @@ public class FollowCamera : MonoBehaviour {
     }
 
     void Update() {
-        RotateCamera(rotateAxis);
+        if (!GameManager.instance.IsOver) {
+            RotateCamera(rotateAxis);
+        }
     }
 
     /// <summary>

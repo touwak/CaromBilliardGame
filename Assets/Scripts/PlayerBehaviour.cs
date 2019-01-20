@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -54,22 +53,22 @@ public class PlayerBehaviour : MonoBehaviour {
 
     void Update() {
 
-        DetectMovement();
+        if (!GameManager.instance.IsOver) {
+            DetectMovement();
 
-        // Shoot
-        if (Input.GetButton("HitBall") && !IsMoving) {
-            IncrementHitForce();
-        }
-        if (Input.GetButtonUp("HitBall") && !IsMoving) {
-            HitBall();
-        }
+            // Shoot
+            if (Input.GetButton("HitBall") && !IsMoving) {
+                IncrementHitForce();
+            }
+            if (Input.GetButtonUp("HitBall") && !IsMoving) {
+                HitBall();
+            }
 
-        // Ball direction
-        if (!IsMoving) {
-            BallDirection();
+            // Ball direction
+            if (!IsMoving) {
+                BallDirection();
+            }
         }
-
-        Debug.Log("Replay: " + GameManager.instance.isReplaying);
     }
 
     #region Movement Detection
@@ -90,7 +89,6 @@ public class PlayerBehaviour : MonoBehaviour {
             GameManager.instance.isReplaying = false;
         }
 
-        //Debug.Log("isMoving: " + isMoving);
     }
     #endregion
 
@@ -138,7 +136,9 @@ public class PlayerBehaviour : MonoBehaviour {
     private void OnCollisionEnter(Collision collision) {
 
         // Sound
-        PlayHitSound();
+        if (!collision.collider.CompareTag("Surface")) {
+            PlayHitSound();
+        }
 
         // Check that is not replaying the last movement
         if (!GameManager.instance.isReplaying) {
