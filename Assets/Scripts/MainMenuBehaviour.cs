@@ -35,6 +35,9 @@ public class MainMenuBehaviour : MonoBehaviour {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Load the player data from a JSON file and show it in the UI
+    /// </summary>
     void LoadPlayerData() {
 
         string path = Path.Combine(Application.persistentDataPath, "PlayerData.txt");

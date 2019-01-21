@@ -177,7 +177,9 @@ public class GameManager : MonoBehaviour {
     }
 
     #region Game Over
-
+    /// <summary>
+    /// Stop the game and show the Game Over menu
+    /// </summary>
     void GameOver() {
         isOver = true;
         SavePlayerData();
@@ -193,7 +195,9 @@ public class GameManager : MonoBehaviour {
         gameOverPanel.SetActive(true);
     }
 
-
+    /// <summary>
+    /// Save the player data in a JSON file
+    /// </summary>
     void SavePlayerData() {
         GameData data = new GameData() ;
         data.shoots = numShoots;

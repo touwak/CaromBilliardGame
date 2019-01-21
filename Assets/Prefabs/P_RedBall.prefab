@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 135585792976708104}
   - component: {fileID: 54698257218523424}
   - component: {fileID: 82117122628169698}
+  - component: {fileID: 114403156394138396}
   m_Layer: 0
   m_Name: P_RedBall
   m_TagString: RedBall
@@ -196,6 +197,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114403156394138396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1989532321339114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4c6e37fa92a074abc0b14ed6a63af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135585792976708104
 SphereCollider:
   m_ObjectHideFlags: 1

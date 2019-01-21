@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 135630635989108120}
   - component: {fileID: 54467989221716272}
   - component: {fileID: 82162065737803774}
+  - component: {fileID: 114798336549538200}
   m_Layer: 0
   m_Name: P_YellowBall
   m_TagString: YellowBall
@@ -196,6 +197,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &114798336549538200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1724895365883810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4c6e37fa92a074abc0b14ed6a63af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135630635989108120
 SphereCollider:
   m_ObjectHideFlags: 1
