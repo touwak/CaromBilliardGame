@@ -2,19 +2,36 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using DG.Tweening;
 
 public class MainMenuBehaviour : MonoBehaviour {
 
     #region Variables
-    public Slider volumeSlider;
+    [SerializeField]
+    Slider volumeSlider;
+    [SerializeField]
+    Text shootsText;
+    [SerializeField]
+    Text pointsText;
+    [SerializeField]
+    Text timeText;
 
-    public Text shootsText;
-    public Text pointsText;
-    public Text timeText;
+    [Header("Tween")]
+    [SerializeField]
+    GameObject title;
+    [SerializeField]
+    GameObject menu;
+    [SerializeField]
+    GameObject lastScore;
+
     #endregion
 
     private void Start() {
         LoadPlayerData();
+
+        title.transform.DOMoveY(title.transform.position.y * 1.5f, 0.5f).SetEase(Ease.OutBack).From();
+        menu.transform.DOScale(0, 0.5f).From().SetDelay(0.25f);
+        lastScore.transform.DOScale(2, 0.5f).From().SetDelay(0.5f);
     }
 
     /// <summary>

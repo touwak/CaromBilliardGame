@@ -218,7 +218,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &108095761
 Transform:
@@ -529,7 +529,7 @@ MonoBehaviour:
   whiteBall: {fileID: 709369766}
   redBall: {fileID: 31342724}
   yellowBall: {fileID: 1586125995}
-  victoryThreeshold: 1
+  victoryThreeshold: 3
 --- !u!4 &312806624
 Transform:
   m_ObjectHideFlags: 0
@@ -582,6 +582,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114274022360332606, guid: 4cdc1696814f9344eb9089275e95d6f2,
+        type: 2}
+      propertyPath: rayCastingSections
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cdc1696814f9344eb9089275e95d6f2, type: 2}
   m_IsPrefabAsset: 0
@@ -601,7 +606,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &339397962
 Transform:
@@ -1937,7 +1942,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1348019023
 Transform:
@@ -2468,7 +2473,7 @@ GameObject:
   m_TagString: Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1913164105
 Transform:
@@ -2784,7 +2789,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2139733174
 Transform:

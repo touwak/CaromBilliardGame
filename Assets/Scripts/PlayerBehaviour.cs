@@ -33,7 +33,7 @@ public class PlayerBehaviour : MonoBehaviour {
     #endregion
 
     void Start () {
-        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        camera = Camera.main;
         rigidbody = GetComponent<Rigidbody>();
 
         // Calculate the acceleration in time
