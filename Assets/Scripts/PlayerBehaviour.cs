@@ -53,8 +53,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
     void Update() {
 
-        Debug.Log("IsReplaying: " + GameManager.instance.isReplaying);
-
         if (!GameManager.instance.IsOver) {
             DetectMovement();
 
