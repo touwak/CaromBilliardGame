@@ -53,6 +53,8 @@ public class PlayerBehaviour : MonoBehaviour {
 
     void Update() {
 
+        Debug.Log("IsReplaying: " + GameManager.instance.isReplaying);
+
         if (!GameManager.instance.IsOver) {
             DetectMovement();
 
@@ -85,10 +87,7 @@ public class PlayerBehaviour : MonoBehaviour {
             IsMoving = false;
             redBallTouched = false;
             yellowBallTouched = false;
-
-            GameManager.instance.isReplaying = false;
         }
-
     }
     #endregion
 
@@ -97,7 +96,9 @@ public class PlayerBehaviour : MonoBehaviour {
     /// Hit the ball in the forward direction of the camera
     /// </summary>
     void HitBall() {
-        
+        // Set the replaying to false
+        GameManager.instance.isReplaying = false;
+
         Vector3 direction = camera.transform.forward;
         direction.y = 0.0f;
         Vector3 force = direction * finalStrength;

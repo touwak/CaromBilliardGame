@@ -159,13 +159,15 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void Replay() {
         if (!isReplaying) {
-            isReplaying = true;
 
+            whiteBall.GetComponent<Rigidbody>().velocity = Vector3.zero;
             whiteBall.transform.position = whiteBallPosition;
             redBall.transform.position = redBallPosition;
             yellowBall.transform.position = yellowBallPosition;
 
             whiteBall.GetComponent<Rigidbody>().AddForce(whiteBallDirection, ForceMode.Impulse);
+
+            isReplaying = true;
         }
     }
 
